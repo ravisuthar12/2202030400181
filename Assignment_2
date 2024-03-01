@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Ticket Booking App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .book-now-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Train Ticket Booking App</h1>
+    </header>
+    <div class="container">
+        <form id="booking-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="from">From:</label>
+            <input type="text" id="from" name="from" required>
+
+            <label for="to">To:</label>
+            <input type="text" id="to" name="to" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="button" onclick="searchTrains()">Search for Trains</button>
+        </form>
+
+        <table id="train-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Train No</th>
+                    <th>Train Name</th>
+                    <th>Time</th>
+                    <th>Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="train-list-body">
+                <!-- Train details will be dynamically added here -->
+            </tbody>
+        </table>
+
+        <div id="booking-details" style="display:none;">
+            <h2>Booking Details</h2>
+            <p>Train No: <span id="selected-train-no"></span></p>
+            <p>Train Name: <span id="selected-train-name"></span></p>
+            <p>Time: <span id="selected-train-time"></span></p>
+            <p>Cost: $<span id="selected-train-cost"></span></p>
+            <button class="book-now-btn" onclick="bookNow()">Book Now</button>
+        </div>
+    </div>
+
+    <script>
+        function searchTrains() {
+            // Add logic to fetch and display available trains based on user input
+            // For simplicity, this example uses static data
+            const trains = [
+                { number: 'T123', name: 'Express One', time: '10:00 AM', cost: 30 },
+                { number: 'T456', name: 'Rapid Transit', time: '2:30 PM', cost: 25 },
+                { number: 'T789', name: 'Swift Commuter', time: '7:45 PM', cost: 20 }
+            ];
+
+            const trainTable = document.getElementById('train-table');
+            const trainListBody = document.getElementById('train-list-body');
+
+            // Clear previous search results
+            trainListBody.innerHTML = '';
+
+            // Populate table with available trains
+            trains.forEach(train => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${train.number}</td>
+                    <td>${train.name}</td>
+                    <td>${train.time}</td>
+                    <td>$${train.cost}</td>
+                    <td><button onclick="selectTrain('${train.number}', '${train.name}', '${train.time}', ${train.cost})">Select</button></td>
+                `;
+                trainListBody.appendChild(row);
+            });
+
+            // Display the table
+            trainTable.style.display = 'table';
+        }
+
+        function selectTrain(trainNo, trainName, trainTime, trainCost) {
+            // Update the booking details section with the selected train information
+            document.getElementById('selected-train-no').textContent = trainNo;
+            document.getElementById('selected-train-name').textContent = trainName;
+            document.getElementById('selected-train-time').textContent = trainTime;
+            document.getElementById('selected-train-cost').textContent = trainCost;
+
+            // Show the booking details section
+            document.getElementById('booking-details').style.display = 'block';
+        }
+
+        function bookNow() {
+            // Add logic to handle the booking process
+            // For simplicity, this example displays an alert
+            alert('Booking confirmed! Ticket number: ' + generateTicketNumber());
+
+            // You would typically send data to a server for real booking
+        }
+
+        function generateTicketNumber() {
+            // Generate a random ticket number for demonstration purposes
+            return Math.floor(Math.random() * 1000000) + 1;
+        }
+    </script>
+</body>
+</html>
 
